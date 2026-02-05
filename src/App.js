@@ -38,7 +38,39 @@ function App() {
     },
   ]);
 
+  const colors = [
+    "red",
+    "green",
+    "silver",
+    "brown",
+    "purple",
+    "yellow",
+    "orange",
+    "pink",
+  ];
+
   const [numberOfHabits, setNumberOfHabits] = useState(0);
+
+  const [textEntered, setTextEntered] = useState("");
+
+  const handleChange = (e) => {
+    setTextEntered(e.target.value);
+  };
+
+  const addNewHabit = (keypress) => {
+    if (keypress === "Enter") {
+      setHabits([
+        ...habits,
+        {
+          key: habits.length + 1,
+          name: textEntered,
+          amount: 0,
+        },
+      ]);
+
+      setTextEntered("");
+    }
+  };
 
   useEffect(() => {
     setNumberOfHabits(habits.length);
@@ -60,9 +92,14 @@ function App() {
   console.log(habits);
 
   return (
-    <div className="App">
+    <div className="App" onKeyDown={(e) => addNewHabit(e.key)}>
       <div className="mainWrappingContainer">
-        <input></input>
+        <input
+          type="text"
+          value={textEntered}
+          onChange={handleChange}
+          placeholder="Enter your new habit"
+        />
 
         <div className="titleContainer">
           <h1>HABITS</h1>
@@ -74,7 +111,10 @@ function App() {
             return (
               <Habit
                 key={habit.key}
-                color="green"
+                color={[
+                  colors[Math.floor(Math.random() * colors.length)],
+                  colors[Math.floor(Math.random() * colors.length)],
+                ]}
                 amount={habit.amount}
                 name={habit.name}
                 keyValue={habit.key}
