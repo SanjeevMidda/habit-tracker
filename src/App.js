@@ -1,43 +1,8 @@
 import "./index.css";
 import Habit from "./components/Habit";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 function App() {
-  // current habits
-
-  const [habits, setHabits] = useState([
-    {
-      key: 0,
-      name: "morning yoga",
-      amount: 0,
-    },
-    {
-      key: 1,
-      name: "Wim Hof",
-      amount: 1,
-    },
-    {
-      key: 2,
-      name: "drink water",
-      amount: 4,
-    },
-    {
-      key: 3,
-      name: "Go for run",
-      amount: 4,
-    },
-    {
-      key: 4,
-      name: "Wake up early",
-      amount: 4,
-    },
-    {
-      key: 5,
-      name: "Do poo",
-      amount: 4,
-    },
-  ]);
-
   const colors = [
     "red",
     "green",
@@ -48,6 +13,65 @@ function App() {
     "orange",
     "pink",
   ];
+
+  // current habits
+
+  const [habits, setHabits] = useState([
+    {
+      key: 0,
+      name: "morning yoga",
+      amount: 0,
+      color: [
+        colors[Math.floor(Math.random() * colors.length)],
+        colors[Math.floor(Math.random() * colors.length)],
+      ],
+    },
+    {
+      key: 1,
+      name: "Wim Hof",
+      amount: 1,
+      color: [
+        colors[Math.floor(Math.random() * colors.length)],
+        colors[Math.floor(Math.random() * colors.length)],
+      ],
+    },
+    {
+      key: 2,
+      name: "drink water",
+      amount: 4,
+      color: [
+        colors[Math.floor(Math.random() * colors.length)],
+        colors[Math.floor(Math.random() * colors.length)],
+      ],
+    },
+    {
+      key: 3,
+      name: "Go for run",
+      amount: 4,
+      color: [
+        colors[Math.floor(Math.random() * colors.length)],
+        colors[Math.floor(Math.random() * colors.length)],
+      ],
+    },
+    {
+      key: 4,
+      name: "Wake up early",
+      amount: 4,
+      color: [
+        colors[Math.floor(Math.random() * colors.length)],
+        colors[Math.floor(Math.random() * colors.length)],
+      ],
+    },
+    {
+      key: 5,
+      name: "Do poo",
+      amount: 4,
+      color: [
+        colors[Math.floor(Math.random() * colors.length)],
+        colors[Math.floor(Math.random() * colors.length)],
+      ],
+    },
+  ]);
 
   const [numberOfHabits, setNumberOfHabits] = useState(0);
 
@@ -75,6 +99,7 @@ function App() {
   useEffect(() => {
     setNumberOfHabits(habits.length);
   }, [habits]);
+
   // input to add a habit
   //habit has a color, choice to increase or decrease and name
   //habit can be removed
@@ -89,7 +114,14 @@ function App() {
     );
   };
 
-  console.log(habits);
+  // delete habit
+  const deleteHabit = (keyValue) => {
+    const updatedHabits = habits.filter((h) => h.key !== keyValue);
+
+    setHabits(updatedHabits);
+
+    console.log(habits);
+  };
 
   return (
     <div className="App" onKeyDown={(e) => addNewHabit(e.key)}>
@@ -111,16 +143,14 @@ function App() {
             return (
               <Habit
                 key={habit.key}
-                color={[
-                  colors[Math.floor(Math.random() * colors.length)],
-                  colors[Math.floor(Math.random() * colors.length)],
-                ]}
+                color={habit.color}
                 amount={habit.amount}
                 name={habit.name}
                 keyValue={habit.key}
                 setHabit={setHabits}
                 habits={habits}
                 updateAmount={updateAmount}
+                deleteHabit={deleteHabit}
               />
             );
           })}
