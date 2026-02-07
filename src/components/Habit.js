@@ -8,6 +8,7 @@ const Habit = ({
   setHabit,
   habits,
   updateAmount,
+  deleteHabit,
 }) => {
   const [habitNumber, setHabitNumber] = useState(0);
 
@@ -20,6 +21,8 @@ const Habit = ({
       >
         <p>{amount}</p>
       </div>
+
+      <button onClick={() => deleteHabit(keyValue)}>X</button>
     </div>
   );
 };
